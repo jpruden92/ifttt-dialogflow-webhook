@@ -1,7 +1,7 @@
 {
   "name": "ifttt-dialogflow-webhook",
   "version": "1.0.0",
-  "description": "",
+  "description": "Dialogflow fullfilment that allows to integrate your chatbots with IFTTT applets.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -11,8 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/jpruden92/ifttt-dialogflow-webhook.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jorge Prudencio",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/jpruden92/ifttt-dialogflow-webhook/issues"
   },
