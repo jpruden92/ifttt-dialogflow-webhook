@@ -48,10 +48,11 @@ On this example we are going to create a small poll with a chatbot. The replies 
 4. Insert your fulfillment URL on Fulfillment section.
 
 ## Step 4: Connect all.
-1. Get IFTTT Webhooks URL [here](https://ifttt.com/services/maker_webhooks/settings).
-2. Go to your Heroku app options: ``https://dashboard.heroku.com/apps/<app_name>/settings``.
-3. Reveal config vars and add:
-    - trigger_url: IFTTT Webhooks URL.
+1. Open [https://ifttt.com/services/maker_webhooks/settings](https://ifttt.com/services/maker_webhooks/settings). You will see an URL. Open it on your browser.
+2. Copy the URL inside ``Make a POST or GET web request to:``. This is the ``IFTTT Webhooks URL``.
+3. Go to your Heroku app options: ``https://dashboard.heroku.com/apps/<app_name>/settings``.
+4. Reveal config vars and add:
+    - trigger_url: Paste ``IFTTT Webhooks URL``.
     - intents:
     ```json
     {
