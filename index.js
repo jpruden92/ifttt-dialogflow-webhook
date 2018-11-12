@@ -19,7 +19,7 @@ for (intent in config.intents) {
         const queryResult = conv.body.queryResult;
         const formData = queryResult.parameters;
         const postBody = {
-            url: config.trigger_url.replace('{{event}}', event),
+            url: config.trigger_url.replace('{event}', event),
             form: formData
         };
 
