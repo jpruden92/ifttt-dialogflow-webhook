@@ -58,7 +58,7 @@ On this example we are going to create a small poll with a chatbot. The replies 
 
     Paste ``IFTTT Webhooks URL``.
     
-    ![trigger_url](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/trigger_url.png)
+    ![trigger_url](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/trigger_url_v2.png)
 
 - intents:
 
