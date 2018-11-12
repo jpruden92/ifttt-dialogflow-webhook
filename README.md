@@ -42,8 +42,10 @@ On this example we are going to create a small poll with a chatbot. The replies 
     - Intent name. We will use ``bot.example.poll``.
     - Some training phrases. For example: ``i want to complete the poll``, ``complete the poll``, ``reply the poll``.
     - Two required params:
-        - value1: @sys.given-name. Prompt: ``Your name?``.
-        - value2: @sys.number. Prompt: ``Your age?``.
+        - value1 - @sys.given-name - $value1. Prompt: ``Your name?``.
+        - value2 - @sys.number - $value2. Prompt: ``Your age?``.
+
+        ![parameters](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/parameters.png)
     - A response: Thanks for reply our survey.
 3. Save intent.
 4. Insert your fulfillment URL on Fulfillment section.
