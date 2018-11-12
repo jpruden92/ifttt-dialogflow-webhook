@@ -1,3 +1,4 @@
+
 # 1. Intro
 
 On this repo you will find a very small Dialogflow fullfilment that allows to integrate your chatbots with IFTTT applets.
@@ -52,13 +53,22 @@ On this example we are going to create a small poll with a chatbot. The replies 
 2. Copy the URL inside ``Make a POST or GET web request to:``. This is the ``IFTTT Webhooks URL``.
 3. Go to your Heroku app options: ``https://dashboard.heroku.com/apps/<app_name>/settings``.
 4. Reveal config vars and add:
-    - trigger_url: Paste ``IFTTT Webhooks URL``.
-    - intents:
+
+- trigger_url:
+
+    Paste ``IFTTT Webhooks URL``.
+    
+    ![trigger_url](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/trigger_url.png)
+
+- intents:
+
     ```json
     {
         "bot.example.poll": "poll_completed"
     }
     ```
+
+    ![intents](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/intents.png)
 
 NOTE: You can insert as intents as you want on intents variable in this format:
 ```json
