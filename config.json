@@ -1,8 +1,7 @@
 {
   "user": "test",
   "password": "test",
-  "trigger_url": "https://maker.ifttt.com/use/dpME30dDxWbquKQxM25Wjb",
+  "trigger_url": "",
   "intents": {
-    "a": "b"
   }
 }
