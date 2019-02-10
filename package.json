@@ -19,8 +19,11 @@
   "homepage": "https://github.com/jpruden92/ifttt-dialogflow-webhook#readme",
   "dependencies": {
     "actions-on-google": "^2.4.1",
+    "basic-auth": "^2.0.1",
     "body-parser": "^1.18.3",
+    "events": "^3.0.0",
     "express": "^4.16.4",
+    "fs": "0.0.1-security",
     "request": "^2.88.0"
   }
 }

@@ -1,8 +1,8 @@
 {
-    "trigger_url": "https://maker.ifttt.com/trigger/{{event}}/with/key/dFq9qkOJHScFh2BklEfFjM",
-    "intents": {
-        "intent-1": "send_email",
-        "intent-2": "add_item_excel",
-        "tweet-this": "evento-1"
-    }
+  "user": "test",
+  "password": "test",
+  "trigger_url": "https://maker.ifttt.com/trigger/{{event}}/with/key/dFq9qkOJHScFh2BklEfFjM",
+  "intents": {
+    "a": "b"
+  }
 }
