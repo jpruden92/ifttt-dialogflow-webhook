@@ -20,10 +20,14 @@ const init = config => {
         app.intent(intent, conv => {
             console.info(intent + ' received. I will fire ' + event + ' event.');
 
+            let webHooksKey = config.trigger_url.split('/');
+            webHooksKey = webHooksKey[webHooksKey.length - 1];
+            const eventsIftttWebhook = `https://maker.ifttt.com/trigger/${event}/with/key/${webHooksKey}`;
+
             const queryResult = conv.body.queryResult;
             const formData = queryResult.parameters;
             const postBody = {
-                url: config.trigger_url.replace('{event}', event),
+                url: eventsIftttWebhook,
                 form: formData
             };
 

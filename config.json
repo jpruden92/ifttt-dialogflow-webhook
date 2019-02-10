@@ -1,7 +1,7 @@
 {
   "user": "test",
   "password": "test",
-  "trigger_url": "https://maker.ifttt.com/trigger/{{event}}/with/key/dFq9qkOJHScFh2BklEfFjM",
+  "trigger_url": "https://maker.ifttt.com/use/dpME30dDxWbquKQxM25Wjb",
   "intents": {
     "a": "b"
   }

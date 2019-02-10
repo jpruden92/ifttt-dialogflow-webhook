@@ -23,10 +23,10 @@
       <div class="card-body">
         <h5 class="card-title">Security</h5>
         <p>
-            <input type="text" class="form-control" id="user" aria-describedby="iftttEventsURL" placeholder="User">
+            <input type="text" class="form-control" id="user" aria-describedby="user" placeholder="User">
         </p>
         <p>
-            <input type="password" class="form-control" id="password" aria-describedby="iftttEventsURL" placeholder="Password">
+            <input type="password" class="form-control" id="password" aria-describedby="password" placeholder="Password">
         </p>
         <button type="submit" class="btn btn-primary" onClick="saveCredentials()">Save</button>
       </div>
@@ -36,7 +36,8 @@
       <div class="card-body">
         <h5 class="card-title">IFTTT Events URL</h5>
         <p>
-            <input type="text" class="form-control" id="iftttEventsURL" aria-describedby="iftttEventsURL">
+            <input type="text" class="form-control" id="iftttEventsURL" aria-describedby="iftttEventsURL" placeholder="https://maker.ifttt.com/use/xxxxxxxx">
+            <small id="emailHelp" class="form-text text-muted">Get it on <a href="https://ifttt.com/services/maker_webhooks/settings" target="_blank">https://ifttt.com/services/maker_webhooks/settings</a></small>
         </p>
         <button type="submit" class="btn btn-primary" onClick="saveIftttWebhook()">Save</button>
       </div>
