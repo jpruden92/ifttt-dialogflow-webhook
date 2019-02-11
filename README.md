@@ -59,8 +59,8 @@ On this example we are going to create a small poll with a chatbot. The replies 
 1. Go to Heroku control panel.
 2. Insert and Save ``IFTTT Events URL``.
 3. Insert connections. First row contains Dialogflow intents. Second row contains IFTTT events. On this example you should insert:
-    - Intent: bot.example.poll
-    - Action: poll_completed
+    - Intent: ``bot.example.poll``.
+    - Action: ``poll_completed``.
 4. Save Connections.
 
 ## Step 5: Test
