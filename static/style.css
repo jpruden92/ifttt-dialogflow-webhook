@@ -1,0 +1,13 @@
+.card {
+    margin: 10px;
+    width: calc(100% - 20px);
+}
+
+.connection {
+    display: flex;
+    margin: 10px 0;
+}
+
+.connection input {
+    flex: 2;
+}
