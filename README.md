@@ -67,5 +67,5 @@ On this example we are going to create a small poll with a chatbot. The replies 
 
 1. Go to ``Integrations`` on Dialogflow.
 2. Enable Web Demo.
-3. Click on https://bot.dialogflow.com/...
+3. Click on ``https://bot.dialogflow.com/...``
 4. Write ``i want to complete the poll``.
