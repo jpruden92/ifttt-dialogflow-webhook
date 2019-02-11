@@ -15,7 +15,7 @@ The objective of this project is to facilitate the integration of third party se
 On this example we are going to create a small poll with a chatbot. The replies will be saved on Google Drive.
 
 ## Step 1: Create a IFTTT applet:
-1. Create a new IFTTT account.
+1. Create a new [IFTTT account](https://ifttt.com/join).
 2. Go to [IFTTT New Applet](https://ifttt.com/create).
 3. Click on ``+this``.
 4. Search ``webhooks``.
