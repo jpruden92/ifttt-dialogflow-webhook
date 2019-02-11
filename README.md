@@ -51,6 +51,7 @@ On this example we are going to create a small poll with a chatbot. The replies 
 3. Activate Fulfillment on ``Fulfillment > Enable webhook call for this intent.``.
 4. Save intent.
 5. Insert your Fulfillment URL on ``Fulfillment`` section. Fulfillment URL appears on Heroku control panel (you installed it on previous section).
+
 ![fulfillment](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/fulfillment.png)
 
 ## Step 4: Connect all.
