@@ -38,8 +38,13 @@ On this example we are going to create a small poll with a chatbot. The replies 
 7. This control panel will allow you to connect your chatbot intents to IFTTT applets.
 
 ## Step 3: Create your intent:
-1. [Create an agent on dialogflow](https://dialogflow.com/docs/getting-started/first-agent).
-2. Create a new intent with this features:
+1. Open a browser and [log in to Dialogflow](https://console.dialogflow.com/api-client/#/login).
+2. Click Create agent in the left menu.
+3. Enter your agent's name, default language, and default time zone, then click the Create button.
+
+![agent](https://dialogflow.com/docs/images/getting-started/first-agent/creating-002.png)
+
+4. Create a new intent with this features:
     - Intent name. We will use ``bot.example.poll``.
     - Some training phrases. For example: ``i want to complete the poll``, ``complete the poll``, ``reply the poll``.
     - Two required params:
@@ -48,9 +53,9 @@ On this example we are going to create a small poll with a chatbot. The replies 
 
         ![parameters](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/parameters.png)
     - A response: Thanks for reply our survey.
-3. Activate Fulfillment on ``Fulfillment > Enable webhook call for this intent.``.
-4. Save intent.
-5. Insert your Fulfillment URL on ``Fulfillment`` section. Fulfillment URL appears on Heroku control panel (you installed it on previous section).
+5. Activate Fulfillment on ``Fulfillment > Enable webhook call for this intent.``.
+6. Save intent.
+7. Insert your Fulfillment URL on ``Fulfillment`` section. Fulfillment URL appears on Heroku control panel (you installed it on previous section).
 
 ![fulfillment](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/fulfillment.png)
 
