@@ -28,7 +28,7 @@ On this example we are going to create a small poll with a chatbot. The replies 
 11. Click ``Finish``.
 
 ## Step 2: Deploy the webhook:
-1. Create a Heroku account.
+1. Create a [Heroku account](https://id.heroku.com/login).
 2. Click on this button:
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 3. Write an app name and choose a region.
