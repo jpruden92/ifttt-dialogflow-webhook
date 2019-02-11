@@ -34,7 +34,8 @@ On this example we are going to create a small poll with a chatbot. The replies 
 3. Write an app name and choose a region.
 4. Click ``Deploy app``
 5. Wait until webhook be deployed.
-6. Click on ``View`` and you will be redirected to your app. The URL of your fulfillment will be: ``https://<app_name>.herokuapp.com/fulfillment``.
+6. Click on ``View`` and you will be redirected to your app. Default user is ``test`` and default password is ``test``. Remember change them.
+7. This control panel will allow you to connect your chatbot intents to IFTTT applets.
 
 ## Step 3: Create your intent:
 1. [Create an agent on dialogflow](https://dialogflow.com/docs/getting-started/first-agent).
@@ -47,38 +48,23 @@ On this example we are going to create a small poll with a chatbot. The replies 
 
         ![parameters](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/parameters.png)
     - A response: Thanks for reply our survey.
-3. Save intent.
-4. Insert your fulfillment URL on Fulfillment section.
+3. Activate Fulfillment on ``Fulfillment > Enable webhook call for this intent.``.
+4. Save intent.
+5. Insert your Fulfillment URL on ``Fulfillment`` section. Fulfillment URL appears on Heroku control panel (you installed it on previous section).
+![fulfillment](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/fulfillment.png)
 
 ## Step 4: Connect all.
-1. Open [https://ifttt.com/services/maker_webhooks/settings](https://ifttt.com/services/maker_webhooks/settings). You will see an URL. Open it on your browser.
-2. Copy the URL inside ``Make a POST or GET web request to:``. This is the ``IFTTT Webhooks URL``.
-3. Go to your Heroku app options: ``https://dashboard.heroku.com/apps/<app_name>/settings``.
-4. Reveal config vars and add:
 
-- trigger_url:
-
-    Paste ``IFTTT Webhooks URL``.
-    
-    ![trigger_url](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/trigger_url_v2.png)
-
-- intents:
-
-    ```json
-    {
-        "bot.example.poll": "poll_completed"
-    }
-    ```
-
-    ![intents](https://s3-eu-west-1.amazonaws.com/ifttt-dialogflow-webhook-imgs/intents.png)
-
-NOTE: You can insert as intents as you want on intents variable in this format:
-```json
-{
-    "dialogflow_intent_name_1": "ifttt_event_name_1",
-    "dialogflow_intent_name_2": "ifttt_event_name_2",
-    "dialogflow_intent_name_3": "ifttt_event_name_3"
-}
-```
+1. Go to Heroku control panel.
+2. Insert and Save ``IFTTT Events URL``.
+3. Insert connections. First row contains Dialogflow intents. Second row contains IFTTT events. On this example you should insert:
+    - Intent: bot.example.poll
+    - Action: poll_completed
+4. Save Connections.
 
 ## Step 5: Test
+
+1. Go to ``Integrations`` on Dialogflow.
+2. Enable Web Demo.
+3. Click on https://bot.dialogflow.com/...
+4. Write ``i want to complete the poll``.
