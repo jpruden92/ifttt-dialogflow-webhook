@@ -19,8 +19,8 @@ const load = () => {
     $.get( '/config', function( data ) {
         console.info(data);
 
-        document.querySelector('#iftttEventsURL').value = data.trigger_url || '';
-        loadConnections(data.intents);
+        document.querySelector('#iftttEventsURL').value = data.iftttEventsUrl || '';
+        loadConnections(data.intentsConnections);
     });
 }
 

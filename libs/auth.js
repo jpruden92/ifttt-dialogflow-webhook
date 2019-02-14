@@ -1,9 +1,29 @@
 const auth = require('basic-auth');
 const configController = require('./config.js');
 
+let credentials = {
+    user: '',
+    password: ''
+};
+
+let initiated = false;
+
+configController.getConfig().then(config => {
+    credentials = config.credentials;
+    initiated = true;
+
+    configController.events.on('config-updated', () => {
+        configController.getConfig().then(config => {
+            credentials = config.credentials;
+        });
+    });
+});
+
+
 module.exports = (request, response, next) => {
-    const config = configController.getConfig();
-    const admins = { [config.user]: { password: config.password } };
+    if (!initiated) response.send('Your configuration is being deploying. Return to this page in few minutes.');
+
+    const admins = { [credentials.user]: { password: credentials.password } };
 
     const user = auth(request);
 
