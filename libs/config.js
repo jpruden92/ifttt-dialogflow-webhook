@@ -16,6 +16,12 @@ const getConfig = () => {
         Promise.all(promises).then(arrayResults => {
             const [ iftttEventsUrl, intentsConnections, credentials ] = arrayResults;
             resolve({ iftttEventsUrl, intentsConnections, credentials });
+        }).catch(() => {
+            setTimeout(() => {
+                getConfig().then(config => {
+                    resolve(config);
+                });
+            }, 1000);
         });
     });
 }
