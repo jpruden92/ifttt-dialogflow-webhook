@@ -21,7 +21,7 @@ configController.getConfig().then(config => {
 
 
 module.exports = (request, response, next) => {
-    if (!initiated) res.send('Your configuration is being deploying. Return to this page in few minutes.');
+    if (!initiated) response.send('Your configuration is being deploying. Return to this page in few minutes.');
 
     const admins = { [credentials.user]: { password: credentials.password } };
 
