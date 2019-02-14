@@ -14,13 +14,13 @@ require('./libs/config.hooks')(expressApp);
 const app = dialogflow();
 
 const init = config => {
-    for (intent in config.intents) {
-        const event = config.intents[intent];
+    for (intent in config.intentsConnections) {
+        const event = config.intentsConnections[intent];
 
         app.intent(intent, conv => {
             console.info(intent + ' received. I will fire ' + event + ' event.');
 
-            let webHooksKey = config.trigger_url.split('/');
+            let webHooksKey = config.iftttEventsUrl.split('/');
             webHooksKey = webHooksKey[webHooksKey.length - 1];
             const eventsIftttWebhook = `https://maker.ifttt.com/trigger/${event}/with/key/${webHooksKey}`;
 
@@ -48,9 +48,14 @@ const init = config => {
     };
 }
 
-init(configController.getConfig());
-configController.events.on('config-updated', () => {
-    init(configController.getConfig());
+configController.getConfig().then(config => {
+    init(config);
+
+    configController.events.on('config-updated', () => {
+        configController.getConfig().then(config => {
+            init(config);
+        });
+    });
 });
 
 expressApp.post('/fulfillment', app);

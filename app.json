@@ -3,5 +3,8 @@
   "description": "Connect Dialogflow intents to IFTTT Applets.",
   "repository": "https://github.com/jpruden92/ifttt-dialogflow-webhook",
   "logo": "https://upload.wikimedia.org/wikipedia/en/e/ec/IFTTT_Logo_2015.png",
-  "keywords": ["node", "express", "static"]
+  "keywords": ["node", "express", "static"],
+  "addons": [
+    "memcachier:dev"
+  ]
 }
