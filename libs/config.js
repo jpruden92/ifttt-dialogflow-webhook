@@ -21,7 +21,7 @@ const getConfig = () => {
                 getConfig().then(config => {
                     resolve(config);
                 });
-            }, 1000);
+            }, 2000);
         });
     });
 }

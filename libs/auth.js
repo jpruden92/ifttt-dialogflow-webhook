@@ -6,9 +6,11 @@ let credentials = {
     password: ''
 };
 
+let initiated = false;
+
 configController.getConfig().then(config => {
-    console.info(config);
     credentials = config.credentials;
+    initiated = true;
 
     configController.events.on('config-updated', () => {
         configController.getConfig().then(config => {
@@ -19,6 +21,8 @@ configController.getConfig().then(config => {
 
 
 module.exports = (request, response, next) => {
+    if (!initiated) res.send('Your configuration is being deploying. Return to this page in few minutes.');
+
     const admins = { [credentials.user]: { password: credentials.password } };
 
     const user = auth(request);
