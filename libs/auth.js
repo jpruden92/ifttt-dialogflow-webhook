@@ -1,9 +1,25 @@
 const auth = require('basic-auth');
 const configController = require('./config.js');
 
+let credentials = {
+    user: '',
+    password: ''
+};
+
+configController.getConfig().then(config => {
+    console.info(config);
+    credentials = config.credentials;
+
+    configController.events.on('config-updated', () => {
+        configController.getConfig().then(config => {
+            credentials = config.credentials;
+        });
+    });
+});
+
+
 module.exports = (request, response, next) => {
-    const config = configController.getConfig();
-    const admins = { [config.user]: { password: config.password } };
+    const admins = { [credentials.user]: { password: credentials.password } };
 
     const user = auth(request);
 

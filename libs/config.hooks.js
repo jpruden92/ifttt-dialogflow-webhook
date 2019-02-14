@@ -2,7 +2,9 @@ const configController = require('./config');
 
 const init = expressApp => {
     expressApp.get('/config', (req, res) => {
-        res.send(configController.getConfig());
+        configController.getConfig().then(config => {
+            res.send(config);
+        });
     });
 
     expressApp.post('/config/credentials', (req, res) => {
