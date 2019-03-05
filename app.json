@@ -5,6 +5,6 @@
   "logo": "https://upload.wikimedia.org/wikipedia/en/e/ec/IFTTT_Logo_2015.png",
   "keywords": ["node", "express", "static"],
   "addons": [
-    "memcachier:dev"
+    "heroku-postgresql:hobby-dev"
   ]
 }
