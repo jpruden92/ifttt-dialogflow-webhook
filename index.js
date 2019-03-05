@@ -48,7 +48,7 @@ const init = config => {
     };
 }
 
-configController.getConfig().then(config => {
+configController.events.on('initiated', config => {
     init(config);
 
     configController.events.on('config-updated', () => {

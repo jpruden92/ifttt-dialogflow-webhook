@@ -10,20 +10,14 @@ const client = new Client({
 
 client.connect();
 
-const getConfig = () => {
+let config = null;
+
+const _updateConfig = () => {
     return new Promise((resolve, reject) => {
         initConfigInNeeded().then(() => {
-            const promises = [ _getIFTTTEventsUrl(), _getIntentsConnections(), _getCredentials() ];
-
-            Promise.all(promises).then(arrayResults => {
-                const [ iftttEventsUrl, intentsConnections, credentials ] = arrayResults;
-                resolve({ iftttEventsUrl, intentsConnections, credentials });
-            }).catch(() => {
-                setTimeout(() => {
-                    getConfig().then(config => {
-                        resolve(config);
-                    });
-                }, 2000);
+            _getConfig().then(_config => {
+                config = _config;
+                resolve();
             });
         });
     });
@@ -98,20 +92,21 @@ const setIFTTTEventsUrl = IFTTTEventsUrl => {
     });
 }
 
-const _getIFTTTEventsUrl = () => {
+const _getConfig = () => {
     return new Promise((resolve, reject) => {
-        client.query(`SELECT ifttteventsurl FROM config WHERE id = 'default';`, (err, res) => {
+        client.query(`SELECT * FROM config WHERE id = 'default';`, (err, res) => {
             if (err) {
                 console.error(err);
                 reject();
             }
 
-            if (res.rows.length === 0) {
-                const DEFAULT_VAL = '';
-                resolve(DEFAULT_VAL);
-            } else {
-                resolve(res.rows[0].ifttteventsurl);
-            }
+            const _config = res.rows[0];
+
+            resolve({
+                iftttEventsUrl: _config.ifttteventsurl,
+                intentsConnections: JSON.parse(_config.intentsconnections),
+                credentials: JSON.parse(_config.credentials)
+            });
         });
     });
 }
@@ -124,26 +119,10 @@ const _setIFTTTEventsUrl = value => {
                 reject();
             }
 
-            emitter.emit('config-updated');
-            resolve();
-        });
-    });
-}
-
-const _getIntentsConnections = () => {
-    return new Promise((resolve, reject) => {
-        client.query(`SELECT intentsconnections FROM config WHERE id = 'default';`, (err, res) => {
-            if (err) {
-                console.error(err);
-                reject();
-            }
-
-            if (res.rows.length === 0) {
-                const DEFAULT_VAL = {};
-                resolve(DEFAULT_VAL);
-            } else {
-                resolve(JSON.parse(res.rows[0].intentsconnections));
-            }
+            _updateConfig().then(() => {
+                emitter.emit('config-updated');
+                resolve();
+            });
         });
     });
 }
@@ -156,29 +135,10 @@ const _setIntentsConnections = value => {
                 reject();
             }
 
-            emitter.emit('config-updated');
-            resolve();
-        });
-    });
-}
-
-const _getCredentials = () => {
-    return new Promise((resolve, reject) => {
-        client.query(`SELECT credentials FROM config WHERE id = 'default';`, (err, res) => {
-            if (err) {
-                console.error(err);
-                reject();
-            }
-
-            if (res.rows.length === 0) {
-                const DEFAULT_VAL = {
-                    user: 'test',
-                    password: 'test'
-                };
-                resolve(DEFAULT_VAL);
-            } else {
-                resolve(JSON.parse(res.rows[0].credentials));
-            }
+            _updateConfig().then(() => {
+                emitter.emit('config-updated');
+                resolve();
+            });
         });
     });
 }
@@ -191,11 +151,29 @@ const _setCredentials = value => {
                 reject();
             }
 
-            emitter.emit('config-updated');
-            resolve();
+            _updateConfig().then(() => {
+                emitter.emit('config-updated');
+                resolve();
+            });
         });
     });
 }
+
+const getConfig = () => {
+    return new Promise((resolve, reject) => {
+        if (!config) {
+            _updateConfig().then(() => {
+                resolve(config);
+            });
+        } else {
+            resolve(config);
+        }
+    });
+}
+
+getConfig().then(currentConfig => {
+    emitter.emit('initiated', currentConfig);
+});
 
 module.exports = {
     getConfig,

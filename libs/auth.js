@@ -8,7 +8,7 @@ let credentials = {
 
 let initiated = false;
 
-configController.getConfig().then(config => {
+configController.events.on('initiated', config => {
     credentials = config.credentials;
     initiated = true;
 
