@@ -1,27 +1,61 @@
-const memjs = require('memjs');
-
 const EventEmitter = require('events');
 const emitter = new EventEmitter();
 
-const mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
-  failover: true,
-  timeout: 1,
-  keepAlive: true
-})
+const { Client } = require('pg');
 
-const getConfig = () => {
-    const promises = [ _getIFTTTEventsUrl(), _getIntentsConnections(), _getCredentials() ];
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true
+});
 
+client.connect();
+
+let config = null;
+
+const _updateConfig = () => {
     return new Promise((resolve, reject) => {
-        Promise.all(promises).then(arrayResults => {
-            const [ iftttEventsUrl, intentsConnections, credentials ] = arrayResults;
-            resolve({ iftttEventsUrl, intentsConnections, credentials });
-        }).catch(() => {
-            setTimeout(() => {
-                getConfig().then(config => {
-                    resolve(config);
+        initConfigInNeeded().then(() => {
+            _getConfig().then(_config => {
+                config = _config;
+                resolve();
+            });
+        });
+    });
+}
+
+const checkIfConfigExist = tableName => {
+    return new Promise((resolve, reject) => {
+        client.query(`SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = N'${tableName}'`, (err, res) => {
+            if (err) return resolve(false);
+            resolve(res.rows.length > 0);
+        });
+    });
+}
+
+const initConfigInNeeded = () => {
+    return new Promise((resolve, reject) => {
+        checkIfConfigExist('config').then(configExist => {
+            if (!configExist) {
+                client.query(`CREATE TABLE config ( id varchar(255), credentials text, iftttEventsUrl varchar(255), intentsConnections text )`, (err, res) => {
+                    if (err) {
+                        console.error(err);
+                        resolve();
+                        return;
+                    }
+
+                    client.query(`INSERT INTO config (id, credentials, iftttEventsUrl, intentsConnections) VALUES ('default', '{ "user": "test", "password": "test" }', '', '{}')`, (err, res) => {
+                        if (err) {
+                            console.error(err);
+                            resolve();
+                            return;
+                        }
+
+                        resolve();
+                    });
                 });
-            }, 2000);
+            } else {
+                resolve();
+            }
         });
     });
 }
@@ -58,105 +92,88 @@ const setIFTTTEventsUrl = IFTTTEventsUrl => {
     });
 }
 
-const _getIFTTTEventsUrl = () => {
+const _getConfig = () => {
     return new Promise((resolve, reject) => {
-        mc.get('iftttEventsUrl', (err, val) => {
+        client.query(`SELECT * FROM config WHERE id = 'default';`, (err, res) => {
             if (err) {
                 console.error(err);
                 reject();
             }
 
-            if (!val) {
-                const DEFAULT_VAL = '';
-                resolve(DEFAULT_VAL);
-            } else {
-                resolve(val.toString());
-            }
-        })
+            const _config = res.rows[0];
+
+            resolve({
+                iftttEventsUrl: _config.ifttteventsurl,
+                intentsConnections: JSON.parse(_config.intentsconnections),
+                credentials: JSON.parse(_config.credentials)
+            });
+        });
     });
 }
 
 const _setIFTTTEventsUrl = value => {
     return new Promise((resolve, reject) => {
-        mc.set('iftttEventsUrl', value, {expires:0}, (err, val) => {
+        client.query(`UPDATE config SET ifttteventsurl = '${value}' WHERE id = 'default';`, (err, res) => {
             if (err) {
                 console.error(err);
                 reject();
             }
 
-            emitter.emit('config-updated');
-            resolve();
-        })
-    });
-}
-
-const _getIntentsConnections = () => {
-    return new Promise((resolve, reject) => {
-        mc.get('intentsConnections', (err, val) => {
-            if (err) {
-                console.error(err);
-                reject();
-            }
-
-            if (!val) {
-                const DEFAULT_VAL = {};
-                resolve(DEFAULT_VAL);
-            } else {
-                resolve(JSON.parse(val));
-            }
-        })
+            _updateConfig().then(() => {
+                emitter.emit('config-updated');
+                resolve();
+            });
+        });
     });
 }
 
 const _setIntentsConnections = value => {
     return new Promise((resolve, reject) => {
-        mc.set('intentsConnections', JSON.stringify(value), {expires:0}, (err, val) => {
+        client.query(`UPDATE config SET intentsconnections = '${JSON.stringify(value)}' WHERE id = 'default';`, (err, res) => {
             if (err) {
                 console.error(err);
                 reject();
             }
 
-            emitter.emit('config-updated');
-            resolve();
-        })
-    });
-}
-
-const _getCredentials = () => {
-    return new Promise((resolve, reject) => {
-        mc.get('credentials', (err, val) => {
-            if (err) {
-                console.error(err);
-                reject();
-            }
-
-            if (!val || !JSON.parse(val).user || !JSON.parse(val).password) {
-                const DEFAULT_VAL = {
-                    user: 'test',
-                    password: 'test'
-                };
-                resolve(DEFAULT_VAL);
-            } else {
-                resolve(JSON.parse(val));
-            }
-        })
+            _updateConfig().then(() => {
+                emitter.emit('config-updated');
+                resolve();
+            });
+        });
     });
 }
 
 const _setCredentials = value => {
     return new Promise((resolve, reject) => {
-        console.info(value);
-        mc.set('credentials', JSON.stringify(value), {expires:0}, (err, val) => {
+        client.query(`UPDATE config SET credentials = '${JSON.stringify(value)}' WHERE id = 'default';`, (err, res) => {
             if (err) {
                 console.error(err);
                 reject();
             }
 
-            emitter.emit('config-updated');
-            resolve();
-        })
+            _updateConfig().then(() => {
+                emitter.emit('config-updated');
+                resolve();
+            });
+        });
     });
 }
+
+const getConfig = () => {
+    return new Promise((resolve, reject) => {
+        if (!config) {
+            _updateConfig().then(() => {
+                resolve(config);
+            });
+        } else {
+            resolve(config);
+        }
+    });
+}
+
+getConfig().then(currentConfig => {
+    emitter.emit('initiated', currentConfig);
+});
 
 module.exports = {
     getConfig,
