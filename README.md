@@ -1,18 +1,18 @@
 
 # 1. Intro
 
-On this repo you will find a very small Dialogflow fullfilment that allows to integrate your chatbots with IFTTT applets.
+On this repo, you will find a very small Dialogflow fulfillment that allows integrating your chatbots with IFTTT applets.
 
-[Dialogflow](https://dialogflow.com) is a Google platform that facilitate the creation of chatbots. You can configurate your intents and replies easily with a visual interface. You can connect your Dialogflow chatbots with a lot of platforms ( Facebook Messenger, Telegram, Google Assistant, ... ).
+[Dialogflow](https://dialogflow.com) is a Google platform that facilitates the creation of chatbots. You can configure your intents and replies easily with a visual interface. You can connect your Dialogflow chatbots with a lot of platforms ( Facebook Messenger, Telegram, Google Assistant, … ).
 
-If you want to create a chatbot that speaks with third party services ( Gmail, Spotify, ... ) you need to create a fullfilment webhook and develop a connector on your servers.
+If you want to create a chatbot that speaks with third-party services ( Gmail, Spotify, … ) you need to create a fulfillment webhook and develop a connector on your servers.
 
-The objective of this project is to facilitate the integration of third party services with the help of IFTTT.
+The objective of this project is to facilitate the integration of third-party services with the help of IFTTT.
 
-[IFTTT](https://ifttt.com) is a platform where you can configurate connections between hundreds of services.
+[IFTTT](https://ifttt.com) is a platform where you can configure connections between hundreds of services.
 
 # 2. Example
-On this example we are going to create a small poll with a chatbot. The replies will be saved on Google Drive.
+On this example, we are going to create a small poll with a chatbot. The replies will be saved on Google Drive.
 
 ## Step 1: Create a IFTTT applet:
 1. Create a new [IFTTT account](https://ifttt.com/join).
@@ -63,7 +63,7 @@ On this example we are going to create a small poll with a chatbot. The replies 
 
 1. Go to Heroku control panel.
 2. Insert and Save ``IFTTT Events URL``.
-3. Insert connections. First row contains Dialogflow intents. Second row contains IFTTT events. On this example you should insert:
+3. Insert connections. The first row contains Dialogflow intents. The second row contains IFTTT events. On this example you should insert:
     - Intent: ``bot.example.poll``.
     - Action: ``poll_completed``.
 4. Save Connections.
